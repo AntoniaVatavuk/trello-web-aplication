@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg bg-primary bg-gradient">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white" href="#">TRELLO</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div>
+        <button mat-raised-button color="accent" type="button" (click)="logOut()" >
+            Logout
+          </button>
+    </div>
+</nav>
+<body>
+    <div>
+        <app-side-bar></app-side-bar>
+    </div>
+    <div>
+        <app-board></app-board>
+    </div>
+</body>

@@ -1,0 +1,22 @@
+<div *ngIf="(boards$ | async) as boards">
+    <mat-action-list>
+        <div *ngFor="let board of boards" style="outline-style: solid;">
+            <button style="outline-style: none;" mat-list-item (click)="selectBoard(board)">
+                {{board.boardName}}
+                <button style="outline-style: none;" mat-icon-button [matMenuTriggerFor]="menu" aria-label="More options">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editBoard()">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit board name</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteBoard(board.boardId)">
+                        <mat-icon>delete_outline</mat-icon>
+                        <span>Delete board</span>
+                    </button>
+                </mat-menu>
+            </button>
+        </div>
+    </mat-action-list>
+</div>

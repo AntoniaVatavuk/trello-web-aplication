@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 export class HomeComponent {
   loggedUserId: string | null;
   boards$!: Observable<TrelloBoard[]>;
+  selectedBoardId?: number | null = null;
 
   constructor(
     private appService: AppService,
@@ -34,8 +35,8 @@ export class HomeComponent {
     // this.boards.subscribe(boards => console.log(boards));
   }
   
-  selectBoard(){
-
+  selectBoard(currentBoard: TrelloBoard){
+    this.selectedBoardId = currentBoard.boardId;
   }
 
   ngOnInit(): void {

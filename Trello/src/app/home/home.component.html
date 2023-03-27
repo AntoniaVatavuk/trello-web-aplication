@@ -13,9 +13,9 @@
 </nav>
 <body>
     <div>
-        <app-side-bar></app-side-bar>
+        <app-side-bar (selectedBoardEvent)="selectBoard($event)"></app-side-bar>
     </div>
     <div>
-        <app-board></app-board>
+        <app-board *ngIf="selectedBoardId != null" [currentBoardId]="selectedBoardId"></app-board>
     </div>
 </body>

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { filter, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AppService } from '../app.service';
 import { TrelloBoard } from '../shared/interfaces/trello-board';
 import { TrelloBoardService } from '../shared/services/trello-board.service';
@@ -12,6 +12,8 @@ import { TrelloBoardService } from '../shared/services/trello-board.service';
 })
 export class SideBarComponent {
 
+  @Output() selectedBoardEvent = new EventEmitter<TrelloBoard>();
+  
   loggedUserId: string | null;
   boards$!: Observable<TrelloBoard[]>;
 
@@ -34,7 +36,7 @@ export class SideBarComponent {
   }
 
   selectBoard(board: TrelloBoard){
-
+    this.selectedBoardEvent.emit(board);
   }
 
   editBoard(){

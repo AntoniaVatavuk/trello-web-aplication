@@ -18,7 +18,7 @@ export class TrelloBoardService {
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 404) {
-      console.error('User not found');
+      console.error('Board not found');
     } else if (error.status === 500) {
       console.error('Server error');
     } else {

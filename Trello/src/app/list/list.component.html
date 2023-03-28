@@ -1,4 +1,7 @@
-<div>
+<div *ngIf="(cards$ | async) as cards">
+<!-- <div> -->
+    <!-- <p>{{currentBoardId}}</p> -->
+    <p>{{list?.listName}}</p>
     <ul>
         <li *ngFor="let card of cards">
             <app-card [card]="card"></app-card>

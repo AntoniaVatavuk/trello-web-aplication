@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { baseURL } from "./../global";
 import { TrelloBoard } from '../interfaces/trello-board';
@@ -12,10 +12,66 @@ import { TrelloList } from "../interfaces/trello-list";
   providedIn: 'root'
 })
 export class TrelloListService {
+  private readonly listURL = baseURL + "lists";
 
   private readonly httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   constructor(private http: HttpClient) { }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 404) {
+      console.error('List not found');
+    } else if (error.status === 500) {
+      console.error('Server error');
+    } else {
+      console.error('Unknown error');
+    }
+    return throwError('Something went wrong');
+  }
+
+  /* GET */
+  getList(lisdtID: number): Observable<TrelloList> {
+    const url = `${this.listURL}/${lisdtID}`;
+    return this.http.get<TrelloList>(url)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getListsByBoardId(boardId: number): Observable<TrelloList[]> {
+    const url = `${this.listURL}/board/${boardId}`;
+    return this.http.get<TrelloList[]>(url)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  /* POST */
+  createList(list: TrelloList): Observable<TrelloList> {
+    const url = `${this.listURL}`;
+    return this.http.post<TrelloList>(url, list, this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  /* PUT */
+  updateList(listId: number, list: TrelloList): Observable<any> {
+    const url = `${this.listURL}/${listId}`;
+    return this.http.put(url, list, this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  /* DELETE */
+  deleteList(listId: number): Observable<TrelloList> {
+    const url = `${this.listURL}/${listId}`;
+    return this.http.delete<TrelloList>(url, this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
 }

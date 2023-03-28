@@ -11,11 +11,11 @@
           </button>
     </div>
 </nav>
-<body style="display: flex;">
-    <div style="flex: 20%;">
+<body>
+    <div>
         <app-side-bar (selectedBoardEvent)="selectBoard($event)"></app-side-bar>
     </div>
-    <div style="flex: 80%;">
-        <app-board *ngIf="currentBoardId != null" [currentBoardId]="currentBoardId"></app-board>
+    <div>
+        <app-board *ngIf="selectedBoardId != null" [currentBoardId]="selectedBoardId"></app-board>
     </div>
 </body>

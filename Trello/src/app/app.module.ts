@@ -10,7 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { RouterModule, Routes } from '@angular/router';
 import { AppService } from './app.service';
@@ -57,8 +56,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatListModule,
     MatMenuModule,
-    MatIconModule,
-    DragDropModule
+    MatIconModule
   ],
   providers: [AppService],
   bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { AppService } from '../app.service';
 import { TrelloBoard } from '../shared/interfaces/trello-board';
@@ -18,6 +19,7 @@ export class SideBarComponent {
 
   constructor(
     private appService: AppService,
+    private router: Router,
     private trelloBoardService: TrelloBoardService
     ) {
       this.loggedUserId = this.appService.getDataToLocalStorage("loggedUserId");
@@ -33,42 +35,14 @@ export class SideBarComponent {
     this.getAllBoardsFromUser();
   }
 
-  ngOnChange(changes: SimpleChanges) {
-    if (changes['board.boardName']) {
-      // this.editBoard(board.boardName);
-      // this.trelloBoardService.updateBoard(id, board);
-    }
-  }
-
   selectBoard(board: TrelloBoard){
     this.selectedBoardEvent.emit(board);
   }
 
-  // Adds new board
-  addNewBoard(){
-
-  }
-
-  // Sort boards by name ascending at first click, later clicks sort ascending / descending
-  sortBoards(){}
-
-  // Edit board name from board menu
   editBoard(){
-  // editBoard(newBoardName: string){
-    // this.trelloBoardService.getBoard
-    // const board: TrelloBoard = this.boards$.pipe(
-    //   map(boards => boards.filter(board => board.boardName === newBoardName))
-    // );
 
-    // const board: TrelloBoard = {
-    //   name: 'My Category',
-    //   description: 'My Description',
-    // };
-
-    // this.trelloBoardService.updateBoard();
   }
 
-  // Delete board from board menu
   deleteBoard(boardId: number){
     this.trelloBoardService.deleteBoard(boardId).subscribe(() => {
       // After the board is deleted, update the boards$ Observable to remove the deleted board

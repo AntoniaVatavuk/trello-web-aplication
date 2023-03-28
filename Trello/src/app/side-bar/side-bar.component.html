@@ -1,37 +1,13 @@
 <div *ngIf="(boards$ | async) as boards">
-    <div style="display: flex; justify-content: space-between;">
-        <div style="align-self: center;">YOUR BOARDS</div>
-        <div style="display: flex; align-items: flex-start;">
-            <button style="outline-style: none;" mat-icon-button [matMenuTriggerFor]="menu" aria-label="More options">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="addNewBoard()">
-                    <mat-icon>add</mat-icon>
-                    <span>Add new board</span>
-                </button>
-                
-                <button mat-menu-item (click)="sortBoards()">
-                    <mat-icon>sort_by_alpha</mat-icon>
-                    <span>Sort ascending / descending</span>
-                </button>
-            </mat-menu>
-            <button mat-menu-item (click)="addNewBoard()">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
-    </div>
     <mat-action-list>
         <div *ngFor="let board of boards" style="outline-style: solid;">
             <button style="outline-style: none;" mat-list-item (click)="selectBoard(board)">
-                <!-- <input name="boardName" type="text" value={{board.boardName}} #NewBoardName> -->
                 {{board.boardName}}
                 <button style="outline-style: none;" mat-icon-button [matMenuTriggerFor]="menu" aria-label="More options">
                     <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="editBoard()">
-                    <!-- <button mat-menu-item (click)="editBoard(NewBoardName.value(boardName))"> -->
                         <mat-icon>edit</mat-icon>
                         <span>Edit board name</span>
                     </button>

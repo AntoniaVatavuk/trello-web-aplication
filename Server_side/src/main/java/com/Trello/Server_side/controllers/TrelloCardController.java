@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.Trello.Server_side.models.TrelloBoard;
 import com.Trello.Server_side.models.TrelloCard;
 import com.Trello.Server_side.models.TrelloList;
 import com.Trello.Server_side.services.TrelloCardService;
@@ -24,44 +23,53 @@ public class TrelloCardController {
     @Autowired
     private TrelloListService trelloListService;
 
+    // get card by card ID
     @GetMapping("/{cardId}")
-    public TrelloCard getCardById(@PathVariable int cardId) {
-        return trelloCardService.getCardById(cardId);
+    public ResponseEntity<TrelloCard> getCardById(@PathVariable int cardId) {
+    	TrelloCard card = trelloCardService.getCardById(cardId);
+    	if (card == null) {
+    		return ResponseEntity.notFound().build();
+    	}
+    	return ResponseEntity.ok(card);
     }
+
+    // get all cards on this list
+	@GetMapping("/list/{listId}")
+	public ResponseEntity<List<TrelloCard>> getAllCardsByListId(@PathVariable int listId) {
+		List<TrelloCard> cards = trelloCardService.getAllCardsByListId(listId);
+        if (cards == null) {
+            return ResponseEntity.notFound().build();
+        }
+		return ResponseEntity.ok(cards);
+	}
     
+    // create new card
     @PostMapping
     public ResponseEntity<TrelloCard> createCard(@Valid @RequestBody TrelloCard card, @PathVariable int listId) {
 	    // Get the list associated with this card
-	    TrelloList trelloList = trelloListService.getListById(listId);
-	    card.setList(trelloList);
+	    TrelloList list = trelloListService.getListById(listId);
+        if (list == null) {
+            return ResponseEntity.notFound().build();
+        }
+	    card.setList(list);
     	TrelloCard createdCard = trelloCardService.createCard(card);
         return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
-    }
+    }    
+    
+    // update existing board
+	@PutMapping("/{cardId}")
+	public ResponseEntity<TrelloCard> updateCard(@PathVariable int cardId, @Valid @RequestBody TrelloCard card) {
+	  	TrelloCard updatedCard = trelloCardService.updateCard(cardId, card);
+	  	if (updatedCard == null) {
+	  		return ResponseEntity.notFound().build();
+	  	}
+	  	return ResponseEntity.ok(updatedCard);
+	}
 
-//    @GetMapping
-//    public List<TrelloCard> getAllCards() {
-//        return trelloCardService.getAllCards();
-//    }
-//    
-//    @GetMapping("/username/{username}")
-//    public TrelloCard getCardById(@PathVariable String username) {
-//        return trelloCardService.getCardById(username);
-//    }
-//
-//    @GetMapping("/{listId}")
-//    public List<TrelloCard> getAllCardsByListId(@PathVariable int listId) {
-//        return trelloCardService.getAllCardsByListId(listId);
-//    }
-//    
-//
-//    @PutMapping("/{cardId}")
-//    public TrelloCard updateCard(@PathVariable int cardId, @Valid @RequestBody TrelloCard cardDetails) {
-//        return trelloCardService.updateCard(cardId, cardDetails);
-//    }
-//
-//    @DeleteMapping("/{cardId}")
-//    public ResponseEntity<?> deleteCard(@PathVariable int cardId) {
-//    	trelloCardService.deleteCard(cardId);
-//        return ResponseEntity.noContent().build();
-//    }
+	// delete board
+	@DeleteMapping("/{cardId}")
+	public ResponseEntity<?> deleteCard(@PathVariable int cardId) {
+	  	trelloCardService.deleteCard(cardId);
+	    return ResponseEntity.noContent().build();
+	}
 }

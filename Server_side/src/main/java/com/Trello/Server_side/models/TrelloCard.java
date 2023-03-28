@@ -1,14 +1,18 @@
 package com.Trello.Server_side.models;
 
-import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "trello_cards")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class TrelloCard {
     
     @Id
@@ -30,29 +34,26 @@ public class TrelloCard {
     private Integer position;
 
     @Column(name = "due_date")
-    private LocalDateTime dueDate;
+    private Date dueDate;
     
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Date createdAt;
     
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
     
-    public TrelloCard() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
+    public TrelloCard() {}
 
-    public TrelloCard(TrelloList list, String name, String description, Integer position, LocalDateTime dueDate) {
+    public TrelloCard(TrelloList list, String name, String description, Integer position, Date dueDate) {
         this.list = list;
         this.name = name;
         this.description = description;
         this.position = position;
         this.dueDate = dueDate;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.createdAt = Calendar.getInstance().getTime();
+        this.updatedAt = Calendar.getInstance().getTime();;
     }
 
     public int getId() {
@@ -95,27 +96,27 @@ public class TrelloCard {
         this.position = position;
     }
 
-    public LocalDateTime getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 //    public List<Comment> getComments() {

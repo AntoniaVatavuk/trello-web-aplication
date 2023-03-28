@@ -1,6 +1,6 @@
 package com.Trello.Server_side.services;
 
-import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,24 +28,24 @@ public class TrelloBoardService {
     }
 	
     public TrelloBoard createBoard(TrelloBoard board) {
-        board.setCreatedAt(LocalDateTime.now());
-        board.setUpdatedAt(LocalDateTime.now());
+        board.setCreatedAt(Calendar.getInstance().getTime());
+        board.setUpdatedAt(Calendar.getInstance().getTime());
         return trelloBoardRepository.save(board);
     }
-    
-//    public List<TrelloBoard> getAllBoards() {
-//        return trelloBoardRepository.findAll();
-//    }
-//
-//    public TrelloBoard updateBoard(int boardId, TrelloBoard board) {
-//    	TrelloBoard existingBoard = trelloBoardRepository.findById(boardId).orElse(null);
-//        existingBoard.setBoardName(board.getBoardName());
-//        existingBoard.setUpdatedAt(LocalDateTime.now());
-//        return trelloBoardRepository.save(existingBoard);
-//    }
-//
+
+
+    public TrelloBoard updateBoard(int boardId, TrelloBoard board) {
+    	TrelloBoard existingBoard = getBoardById(boardId);
+        if (existingBoard == null) {
+            return null;
+        }
+        existingBoard.setBoardName(board.getBoardName());
+        existingBoard.setUpdatedAt(Calendar.getInstance().getTime());
+        return trelloBoardRepository.save(existingBoard);
+    }
+
     public void deleteBoard(int boardId) {
-    	TrelloBoard existingBoard = trelloBoardRepository.findById(boardId).orElse(null);
+    	TrelloBoard existingBoard = getBoardById(boardId);
     	trelloBoardRepository.delete(existingBoard);
     }
 }

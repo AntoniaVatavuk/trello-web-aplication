@@ -1,6 +1,5 @@
 package com.Trello.Server_side.controllers;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import com.Trello.Server_side.services.TrelloBoardService;
 import com.Trello.Server_side.services.TrelloListService;
 
 @RestController
-@RequestMapping("/api/boards/{boardId}/lists")
+@RequestMapping("/api/lists")
 public class TrelloListController {
 
     @Autowired
@@ -22,6 +21,7 @@ public class TrelloListController {
     @Autowired
 	private TrelloBoardService trelloBoardService;
 
+    // get list by ID
 	@GetMapping("/{listId}")
 	public ResponseEntity<TrelloList> getListById(@PathVariable int listId) {
 		TrelloList list = trelloListService.getListById(listId);
@@ -30,42 +30,44 @@ public class TrelloListController {
 		}
 		return ResponseEntity.ok(list);
 	}
+	
+	// get all lists on this board
+	@GetMapping("/board/{boardId}")
+	public ResponseEntity<List<TrelloList>> getAllListsByBoardId(@PathVariable int boardId) {
+		List<TrelloList> lists = trelloListService.getAllListsByBoardId(boardId);
+        if (lists == null) {
+            return ResponseEntity.notFound().build();
+        }
+		return ResponseEntity.ok(lists);
+	}
 
+	// create new list
 	@PostMapping
 	public ResponseEntity<TrelloList> createList(@RequestBody TrelloList list, @PathVariable int boardId) {
 	    // Get the board associated with this list
-	    TrelloBoard trelloBoard = trelloBoardService.getBoardById(boardId);
-	    list.setBoard(trelloBoard);
-	
+	    TrelloBoard board = trelloBoardService.getBoardById(boardId);
+        if (board == null) {
+            return ResponseEntity.notFound().build();
+        }
+	    list.setBoard(board);
 	    TrelloList createdList = trelloListService.createList(list);
 	    return ResponseEntity.status(HttpStatus.CREATED).body(createdList);
 	}
-  
-//	@GetMapping("/board/{boardId}")
-//	public ResponseEntity<List<TrelloList>> getAllListsByBoardId(@PathVariable int boardId) {
-//		List<TrelloList> lists = trelloListService.getAllListsByBoardId(boardId);
-//		return ResponseEntity.ok(lists);
-//	}
-//
-//
-//	@PutMapping("/{listId}")
-//	public ResponseEntity<TrelloList> updateList(@RequestBody TrelloList list, @PathVariable int listId) {
-//		TrelloList existingList = trelloListService.getListById(listId);
-//	    if (existingList == null) {
-//	    	return ResponseEntity.notFound().build();
-//	    }
-//	    // Update the fields of the existing list with the new values
-//	    existingList.setListName(list.getListName());
-//	    existingList.setPosition(list.getPosition());
-//	    existingList.setUpdatedAt(LocalDateTime.now());
-//	
-//	    TrelloList updatedList = trelloListService.updateList(existingList);
-//	    return ResponseEntity.ok(updatedList);
-//	}
-//
-//	@DeleteMapping("/{listId}")
-//	public ResponseEntity<Void> deleteListById(@PathVariable int listId) {
-//		trelloListService.deleteListById(listId);
-//		return ResponseEntity.noContent().build();
-//	  }
+
+	//update existing list
+	@PutMapping("/{listId}")
+	public ResponseEntity<TrelloList> updateList(@PathVariable int listId, @RequestBody TrelloList list) {
+	    TrelloList updatedList = trelloListService.updateList(listId, list);
+	    if (updatedList == null) {
+	    	return ResponseEntity.notFound().build();
+	    }
+	    return ResponseEntity.ok(updatedList);
+	}
+
+	// delete list
+	@DeleteMapping("/{listId}")
+	public ResponseEntity<Void> deleteListById(@PathVariable int listId) {
+		trelloListService.deleteListById(listId);
+		return ResponseEntity.noContent().build();
+	  }
 }

@@ -1,11 +1,15 @@
 package com.Trello.Server_side.models;
 
-import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "trello_lists")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class TrelloList {
   
 	@Id
@@ -24,23 +28,20 @@ public class TrelloList {
 	private int position;
   
 	@Column(name = "created_at")
-	private LocalDateTime createdAt;
+	private Date createdAt;
   
 	@Column(name = "updated_at")
-	private LocalDateTime updatedAt;
+	private Date updatedAt;
   
-	public TrelloList() {
-	}
+	public TrelloList() {}
   
 	public TrelloList(TrelloBoard board, String listName, int position) {
 		this.board = board;
 		this.listName = listName;
 		this.position = position;
-		this.createdAt = LocalDateTime.now();
-		this.updatedAt = LocalDateTime.now();
+		this.createdAt = Calendar.getInstance().getTime();
+		this.updatedAt = Calendar.getInstance().getTime();
 	}
-  
- 	// Getters and Setters
   
 	public int getListId() {
 		return listId;
@@ -74,19 +75,19 @@ public class TrelloList {
 		this.position = position;
 	}
   
-	public LocalDateTime getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
   
-	public void setCreatedAt(LocalDateTime createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
   
-	public LocalDateTime getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return updatedAt;
 	}
   
-	public void setUpdatedAt(LocalDateTime updatedAt) {
+	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 }

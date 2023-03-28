@@ -1,11 +1,15 @@
 package com.Trello.Server_side.models;
 
-import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "trello_users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class TrelloUser {
 
     @Id
@@ -26,25 +30,22 @@ public class TrelloUser {
     private String fullName;
     
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Date createdAt;
     
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
     
-    public TrelloUser() {
-        // Default constructor
-    }
+    public TrelloUser() {}
 
-    public TrelloUser(String username, String email, String password, String fullName, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public TrelloUser(String username, String email, String password, String fullName) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = Calendar.getInstance().getTime();
+        this.updatedAt = Calendar.getInstance().getTime();
     }
 
-    // Getters and setters for all the fields
     public int getUserId() {
         return userId;
     }
@@ -85,19 +86,19 @@ public class TrelloUser {
         this.fullName = fullName;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

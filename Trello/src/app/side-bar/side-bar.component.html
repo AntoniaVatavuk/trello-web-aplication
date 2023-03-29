@@ -1,21 +1,48 @@
 <div *ngIf="(boards$ | async) as boards">
-    <mat-action-list>
-        <div *ngFor="let board of boards" style="outline-style: solid;">
-            <button style="outline-style: none;" mat-list-item (click)="selectBoard(board)">
-                {{board.boardName}}
-                <button style="outline-style: none;" mat-icon-button [matMenuTriggerFor]="menu" aria-label="More options">
-                    <mat-icon>more_vert</mat-icon>
+    <div class="your-boards">
+        <div>YOUR BOARDS</div>
+
+        <div class="your-boards-buttons">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="More options">
+                <mat-icon class="mat-icon-button-icon">more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" style="outline-style: none;">
+                <button mat-menu-item (click)="addNewBoard()">
+                    <mat-icon>add</mat-icon>
+                    <span>Add new board</span>
                 </button>
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="editBoard()">
-                        <mat-icon>edit</mat-icon>
-                        <span>Edit board name</span>
+                
+                <button mat-menu-item (click)="sortBoards()">
+                    <mat-icon>sort_by_alpha</mat-icon>
+                    <span>Sort ascending / descending</span>
+                </button>
+            </mat-menu>
+    
+            <button mat-icon-button (click)="addNewBoard()">
+                <mat-icon class="mat-icon-button-icon">add</mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-action-list>
+        <div *ngFor="let board of boards">
+            <button mat-list-item (click)="selectBoard(board)">
+                <div class="board-button">
+                    <div>{{board.boardName}}</div>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="More options">
+                        <mat-icon class="mat-icon-button-icon">more_vert</mat-icon>
                     </button>
-                    <button mat-menu-item (click)="deleteBoard(board.boardId)">
-                        <mat-icon>delete_outline</mat-icon>
-                        <span>Delete board</span>
-                    </button>
-                </mat-menu>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="editBoard()">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit board name</span>
+                        </button>
+                        <button mat-menu-item (click)="deleteBoard(board.boardId)">
+                            <mat-icon>delete_outline</mat-icon>
+                            <span>Delete board</span>
+                        </button>
+                    </mat-menu>
+                </div>
             </button>
         </div>
     </mat-action-list>

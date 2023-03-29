@@ -1,0 +1,24 @@
+.your-boards {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.your-boards-buttons {
+    display: flex; 
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.mat-icon-button-icon {
+    margin-bottom: 4px;
+}
+
+.board-button {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

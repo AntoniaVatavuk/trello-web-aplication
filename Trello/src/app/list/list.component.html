@@ -1,8 +1,15 @@
-<div>
-    <ul>
-        <li *ngFor="let card of cards">
+<div *ngIf="(cards$ | async) as cards">
+    <div class="container">
+        <h2>{{list?.listName}}</h2>
+        <!-- <div *ngFor="let card of cards" class="p-2">
             <app-card [card]="card"></app-card>
-        </li> 
-    </ul>
-   
+        </div>  -->
+
+        <div cdkDropList class="card-list" (cdkDropListDropped)="onDrop($event, cards)">
+            <div div class="wrapper"  *ngFor="let card of cards" cdkDrag>
+                <app-card [card]="card" class="card-block" ></app-card>
+            </div>
+        </div>
+    </div>
+
 </div>

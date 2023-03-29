@@ -10,6 +10,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { RouterModule, Routes } from '@angular/router';
 import { AppService } from './app.service';
@@ -24,6 +26,7 @@ import { BoardComponent } from './board/board.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
+import { DatePipe } from '@angular/common';
 
 const routes: Routes = [
   // { path: '', pathMatch: 'full', redirectTo: 'login'},
@@ -56,9 +59,11 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatListModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    DragDropModule,
+    MatDividerModule
   ],
-  providers: [AppService],
+  providers: [AppService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

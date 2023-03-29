@@ -1,0 +1,12 @@
+body{
+    display: flex;
+}
+
+app-side-bar{
+    flex: 20%;
+    border-right: 2px solid rgb(128, 160, 240);
+}
+
+#board-pannel{
+    flex: 80%;
+}

@@ -1,6 +1,18 @@
-<p>board works!</p>
-<div>
-    <p>
-        board id is: {{currentBoardId}}
-    </p>
+<div *ngIf="(lists$ | async) as lists" class="ps-2">
+    <h1>{{board?.boardName}}</h1>
+    <!-- <div *ngFor="let list of lists" style="outline-style: solid;">
+        <app-list [list]="list" style="display: flex; flex-direction: row; flex-wrap: no-wrap"></app-list>
+    </div> -->
+
+
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, lists)">
+        <div class="wrapper" *ngFor="let list of lists" cdkDrag>
+
+                <div cdkDropListGroup>
+                    <app-list [list]="list"></app-list>
+                </div>
+
+        </div>
+    </div>
+
 </div>

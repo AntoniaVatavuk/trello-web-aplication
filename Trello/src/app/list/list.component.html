@@ -1,15 +1,45 @@
 <div *ngIf="(cards$ | async) as cards">
-    <div class="container">
+    <div class="container text-black">
         <h2>{{list?.listName}}</h2>
         <!-- <div *ngFor="let card of cards" class="p-2">
             <app-card [card]="card"></app-card>
         </div>  -->
 
         <div cdkDropList class="card-list" (cdkDropListDropped)="onDrop($event, cards)">
-            <div div class="wrapper"  *ngFor="let card of cards" cdkDrag>
+            <div div class="wrapper flex" *ngFor="let card of cards" cdkDrag>
                 <app-card [card]="card" class="card-block" ></app-card>
             </div>
         </div>
     </div>
 
+
 </div>
+
+        <!-- </div>
+            <app-card cdkDrag [card]="card" class="movie-block"  ></app-card>
+        </div> -->
+
+
+        <!-- <div cdkDropList #{{currentListId}}="cdkDropList"
+            class="movie-list" (cdkDropListDropped)="onDrop($event)" *ngFor="let card of cards">
+            <app-card cdkDrag [card]="card" class="movie-block"  ></app-card>
+        </div> -->
+
+<!-- <div> -->
+    <!-- <p>{{currentBoardId}}</p> -->
+
+
+
+    <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" style="background-color: green;" >
+        <h2 class="p-2">{{list?.listName}}</h2>
+        <div  *ngFor="let card of cards" >
+            <app-card cdkDrag [card]="card"class="example-box" *ngFor="let card of cards"></app-card>
+        </div>
+    </div> -->
+
+
+
+    <!-- <div cdkDrag [cdkDragData]="card" *ngFor="let card of cards">
+        <app-card [card]="card"></app-card>
+    </div> -->
+

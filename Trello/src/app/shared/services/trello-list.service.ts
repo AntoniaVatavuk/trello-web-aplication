@@ -59,6 +59,10 @@ export class TrelloListService {
 
   /* PUT */
   updateList(listId: number, list: TrelloList): Observable<any> {
+    console.log("inside service ");
+    console.log("listId: ", listId);
+    console.log("list: ", list);
+    console.log("list as json: ", JSON.stringify(list, null, 4));
     const url = `${this.listURL}/${listId}`;
     console.log("URL: ", url);
     return this.http.put<TrelloList>(url, JSON.stringify(list, null, 4), this.httpOptions)

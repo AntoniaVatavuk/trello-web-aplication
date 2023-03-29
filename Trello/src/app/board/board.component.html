@@ -1,18 +1,93 @@
-<div *ngIf="(lists$ | async) as lists" class="ps-2">
-    <h1>{{board?.boardName}}</h1>
+<div *ngIf="(lists$ | async) as lists" class="ps-2 board-container">
+    <h1 class="pt-2">{{board?.boardName}}</h1>
     <!-- <div *ngFor="let list of lists" style="outline-style: solid;">
         <app-list [list]="list" style="display: flex; flex-direction: row; flex-wrap: no-wrap"></app-list>
     </div> -->
 
+    <div cdkDropList [cdkDropListData]="lists" class="list-of-lists bg-danger" (cdkDropListDropped)="drop($event, lists)">
+        <div class="list-container m-2 bg-info" *ngFor="let list of lists" cdkDrag cdkDropListOrientation="horizontal" >
 
-    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, lists)">
-        <div class="wrapper" *ngFor="let list of lists" cdkDrag>
 
-                <div cdkDropListGroup>
-                    <app-list [list]="list"></app-list>
-                </div>
+            <!-- <div cdkDropList  [cdkDropListData]="todo" class="example-list"  (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+            </div> -->
+
+
+            <div cdkDropListGroup class="bg-primary" >
+                <app-list class="list-box bg-secondary" [list]="list" layout="row" layout-align="space-around center" ></app-list>     
+            </div>
 
         </div>
     </div>
 
+
+    <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event, lists)">
+        <div class="wrapper" *ngFor="let list of lists" cdkDrag>
+
+            <div cdkDropListGroup>
+                <app-list [list]="list"></app-list>
+            </div>
+
+        </div>
+    </div> -->
+
 </div>
+
+
+
+    <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div cdkDrag class="example-box" *ngFor="let list of lists" >
+            <app-list [list]="list" style="background-color: red;"></app-list>
+        </div>
+    </div> -->
+
+    <!-- <div cdkDropListGroup >
+        <div class="example-container">
+            <div cdkDropList [cdkDropListData]="list" *ngFor="let list of lists" (cdkDropListDropped)="drop($event)">
+                <app-list [list]="list"></app-list>
+                
+
+            </div>
+        </div>
+
+    </div> -->
+
+
+
+<!-- 
+    <div>        
+        <div class="example-container">
+            <h2>To do</h2>
+        
+            <div
+                cdkDropList
+                #todoList="cdkDropList"
+                [cdkDropListData]="todo"
+                [cdkDropListConnectedTo]="[doneList]"
+                class="example-list"
+                (cdkDropListDropped)="drop($event)">
+
+
+                <div class="example-box" *ngFor="let item of todo" cdkDrag>
+
+                    {{item}}
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="example-container">
+            <h2>Done</h2>
+        
+            <div
+                cdkDropList
+                #doneList="cdkDropList"
+                [cdkDropListData]="done"
+                [cdkDropListConnectedTo]="[todoList]"
+                class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+            </div>
+        </div>
+    </div> -->
+

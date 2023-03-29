@@ -54,6 +54,18 @@ export class SideBarComponent {
 
   // Edit board name from board menu
   editBoard(){
+  // editBoard(newBoardName: string){
+    // this.trelloBoardService.getBoard
+    // const board: TrelloBoard = this.boards$.pipe(
+    //   map(boards => boards.filter(board => board.boardName === newBoardName))
+    // );
+
+    // const board: TrelloBoard = {
+    //   name: 'My Category',
+    //   description: 'My Description',
+    // };
+
+    // this.trelloBoardService.updateBoard();
   }
 
   // Delete board from board menu

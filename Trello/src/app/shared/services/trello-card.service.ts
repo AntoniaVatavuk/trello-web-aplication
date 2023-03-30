@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError, ValueFromArray } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { baseURL } from "./../global";
 import { TrelloCard } from "../interfaces/trello-card";
@@ -48,7 +48,7 @@ export class TrelloCardService {
   /* POST */
   createCard(card: TrelloCard): Observable<TrelloCard> {
     const url = `${this.cardURL}`;
-    return this.http.post<TrelloCard>(url, card, this.httpOptions)
+    return this.http.post<TrelloCard>(url, JSON.stringify(card, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     );
@@ -57,7 +57,25 @@ export class TrelloCardService {
   /* PUT */
   updateCard(cardId: number, card: TrelloCard): Observable<any> {
     const url = `${this.cardURL}/${cardId}`;
-    return this.http.put(url, card, this.httpOptions)
+    return this.http.put(url, JSON.stringify(card, null, 4), this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // update more than one card WITHOUT updating list
+  updateAllCards(cards: TrelloCard[]): Observable<any> {
+    const url = `${this.cardURL}/cards`;
+    return this.http.put<TrelloCard>(url, JSON.stringify(cards, null, 4), this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // update card list
+  updateCardList(card: TrelloCard, listId: number): Observable<any> {
+    const url = `${this.cardURL}/card/${card.cardId}/list/${listId}`;
+    return this.http.put<TrelloCard>(url, JSON.stringify(card, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     );

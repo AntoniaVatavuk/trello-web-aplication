@@ -1,5 +1,6 @@
 package com.Trello.Server_side.services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class TrelloListService {
 		return trelloListRepository.save(list);
 	}
 
+	// update one list
 	public TrelloList updateList(int listId, TrelloList list) {
 		TrelloList existingList = getListById(listId);
         if (existingList == null) {
@@ -45,6 +47,22 @@ public class TrelloListService {
         existingList.setPosition(list.getPosition());
         existingList.setUpdatedAt(Calendar.getInstance().getTime());
 		return trelloListRepository.save(existingList);
+	}
+
+	// update more than one list
+	public List<TrelloList> updateAllLists(List<TrelloList> lists) {
+		List<TrelloList> allUpdatedLists = new ArrayList<TrelloList>();
+		for (TrelloList list : lists) {
+			TrelloList updatedList = updateList(list.getListId(), list);
+	        if (updatedList == null) {
+	            return null;
+	        }
+	        allUpdatedLists.add(updatedList);
+		}
+        if (allUpdatedLists.isEmpty()) {
+            return null;
+        }
+		return allUpdatedLists;
 	}
 	
     public void deleteListById(int listId) {

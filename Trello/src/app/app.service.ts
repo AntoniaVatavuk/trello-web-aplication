@@ -4,6 +4,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { TrelloCard } from './shared/interfaces/trello-card';
 import { TrelloCardService } from './shared/services/trello-card.service';
 import { TrelloListService } from './shared/services/trello-list.service';
+import { TrelloList } from './shared/interfaces/trello-list';
 
 @Injectable()
 export class AppService {
@@ -39,17 +40,32 @@ export class AppService {
     this.trelloCardService.updateCard(cardId, card);
   }
 
-  public drop(event: CdkDragDrop<TrelloCard[]>, cards: TrelloCard[]) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(cards, event.previousIndex, event.currentIndex);
-      // this.trelloCardService.updateCard(event[event.currentIndex])
-      //TODO add DB related stuff
+  // after drop event, more than one card changes their position, also update list if list is changed
+  updateAllCards(cards: TrelloCard[], list: TrelloList | null){
+    if (cards.length !== 0) { 
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].position = i;
+        if(list != null && list.listId != cards[i].list.listId){
+          cards[i].list = list;
+          this.trelloCardService.updateCardList(cards[i], list.listId).subscribe(); 
+        }
+      }
+      this.trelloCardService.updateAllCards(cards).subscribe();
+    }
+  }
+
+  public drop(event: CdkDragDrop<TrelloCard[]>, currentList: TrelloList | null) {
+    // currentList is value of the list where the card was dropped
+    if (event.previousContainer === event.container && event.previousIndex !== event.currentIndex) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      this.updateAllCards(event.container.data, null);
     } else {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-        //TODO add DB related stuff
+      this.updateAllCards(event.previousContainer.data, null);
+      this.updateAllCards(event.container.data, currentList);
     }
   }
 

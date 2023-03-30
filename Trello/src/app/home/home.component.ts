@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from '../app.service';
-import {MatButtonModule} from '@angular/material/button';
 import { TrelloBoard } from '../shared/interfaces/trello-board';
 import { TrelloBoardService } from '../shared/services/trello-board.service';
 import { Observable } from 'rxjs';
@@ -22,7 +21,6 @@ export class HomeComponent {
     private trelloBoardService: TrelloBoardService
     ) {
       this.loggedUserId = this.appService.getDataToLocalStorage("loggedUserId");
-      console.log(this.loggedUserId);
   }
 
   logOut(){
@@ -32,7 +30,6 @@ export class HomeComponent {
 
   getAllBoardsFromUser(){
     this.boards$ = this.trelloBoardService.getBoardsByUserId(Number(this.loggedUserId));
-    // this.boards.subscribe(boards => console.log(boards));
   }
   
   selectBoard(currentBoard: TrelloBoard){

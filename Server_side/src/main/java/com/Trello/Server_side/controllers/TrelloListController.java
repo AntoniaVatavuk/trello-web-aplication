@@ -56,12 +56,23 @@ public class TrelloListController {
 
 	//update existing list
 	@PutMapping("/{listId}")
-	public ResponseEntity<TrelloList> updateList(@PathVariable int listId, @RequestBody TrelloList list) {
+	public ResponseEntity<TrelloList> updateList(@RequestBody TrelloList list, @PathVariable int listId) {
+		System.out.println(list);
 	    TrelloList updatedList = trelloListService.updateList(listId, list);
 	    if (updatedList == null) {
 	    	return ResponseEntity.notFound().build();
 	    }
 	    return ResponseEntity.ok(updatedList);
+	}
+
+	//update more than one existing list
+	@PutMapping("/lists")
+	public ResponseEntity<List<TrelloList>> updateAllLists(@RequestBody List<TrelloList> lists) {		
+	    List<TrelloList> updatedLists = trelloListService.updateAllLists(lists);
+	    if (updatedLists == null) {
+	    	return ResponseEntity.notFound().build();
+	    }
+	    return ResponseEntity.ok(updatedLists);
 	}
 
 	// delete list

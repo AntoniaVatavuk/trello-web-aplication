@@ -65,6 +65,26 @@ public class TrelloCardController {
 	  	}
 	  	return ResponseEntity.ok(updatedCard);
 	}
+	
+	//update card list
+	@PutMapping("/card/{cardId}/list/{listId}")
+	public ResponseEntity<TrelloCard> updateCardList(@PathVariable int cardId, @PathVariable int listId, @RequestBody TrelloCard card) {		
+	    TrelloCard updatedCards = trelloCardService.updateCardList(cardId, listId, card);
+	    if (updatedCards == null) {
+	    	return ResponseEntity.notFound().build();
+	    }
+	    return ResponseEntity.ok(updatedCards);
+	}
+
+	//update more than one existing card
+	@PutMapping("/cards")
+	public ResponseEntity<List<TrelloCard>> updateAllCards(@RequestBody List<TrelloCard> cards) {		
+	    List<TrelloCard> updatedCards = trelloCardService.updateAllCards(cards);
+	    if (updatedCards == null) {
+	    	return ResponseEntity.notFound().build();
+	    }
+	    return ResponseEntity.ok(updatedCards);
+	}
 
 	// delete board
 	@DeleteMapping("/{cardId}")

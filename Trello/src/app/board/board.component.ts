@@ -15,7 +15,6 @@ import { AppService } from '../app.service';
 export class BoardComponent {
   @Input() currentBoardId?: number | null = null;
   lists$!: Observable<TrelloList[]>;
-  // lists!: TrelloList[];
   board: TrelloBoard | null = null;
 
   constructor(
@@ -30,11 +29,6 @@ export class BoardComponent {
       // this.lists$.subscribe(lists => this.lists);
     }
   }
-
-  // selectBoard(list: TrelloList){
-  //   this.getAllListsOnBoard();
-  //   this.updateSelectedBoard();
-  // }
 
   updateSelectedBoard(){
     if (this.currentBoardId != null) {
@@ -59,45 +53,22 @@ export class BoardComponent {
     // save all positions to db
   }
 
-  updateListPosition(list: TrelloList, newPosition: number){
-    console.log("update list: ", list);
+  // after drop event, more than one list changes their position so we send a list of lists to update positions all in one go
+  updateAllListsPosition(lists: TrelloList[]){
     if(this.currentBoardId != null){
-      console.log("old position: ", list.position);
-      list.position = newPosition;
-      console.log("new position: ", list.position);
-
-      this.trelloListService.updateList(list.listId, list);
+      for (let i = 0; i < lists.length; i++) {
+        lists[i].position = i;
+      }
+      this.trelloListService.updateAllLists(lists).subscribe();
     }
   }
 
   drop(event: CdkDragDrop<TrelloList[]>, lists: TrelloList[]) {
-    console.log("event.currentIndex ", event.currentIndex);
-    console.log("event.previousIndex ", event.previousIndex);
-    moveItemInArray(lists, event.previousIndex, event.currentIndex);
-    console.log("lists[event.currentIndex] before move", lists[event.currentIndex]);
-    this.updateListPosition(lists[event.currentIndex], event.currentIndex);
-    console.log("lists[event.currentIndex] after move", lists[event.currentIndex]);
+    if(event.previousIndex !== event.currentIndex){
+      moveItemInArray(lists, event.previousIndex, event.currentIndex);
+      this.updateAllListsPosition(lists);
+    }
 
   }
-
-
-
-  // todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-
-  // done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-
-  // drop(event: CdkDragDrop<TrelloList>) {
-  //   if (event.previousContainer === event.container) {
-  //     this.trelloCardService.updateCardPosition;
-  //     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-  //   } else {
-  //     transferArrayItem(
-  //       event.previousContainer.data,
-  //       event.container.data,
-  //       event.previousIndex,
-  //       event.currentIndex,
-  //     );
-  //   }
-  // }
 
 }

@@ -56,11 +56,11 @@ public class TrelloCard {
         this.updatedAt = Calendar.getInstance().getTime();;
     }
 
-    public int getId() {
+    public int getCardId() {
         return cardId;
     }
 
-    public void setId(int cardId) {
+    public void setCardId(int cardId) {
         this.cardId = cardId;
     }
 

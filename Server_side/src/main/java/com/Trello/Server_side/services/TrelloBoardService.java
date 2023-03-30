@@ -24,10 +24,16 @@ public class TrelloBoardService {
 
     public List<TrelloBoard> getAllBoardsByUserId(int userId) {
     	TrelloUser user = trelloUserService.getUserById(userId);
+        if (user == null) {
+            return null;
+        }
         return trelloBoardRepository.findAllByUser(user);
     }
 	
     public TrelloBoard createBoard(TrelloBoard board) {
+        if (board == null) {
+            return null;
+        }
         board.setCreatedAt(Calendar.getInstance().getTime());
         board.setUpdatedAt(Calendar.getInstance().getTime());
         return trelloBoardRepository.save(board);
@@ -35,6 +41,9 @@ public class TrelloBoardService {
 
 
     public TrelloBoard updateBoard(int boardId, TrelloBoard board) {
+        if (board == null) {
+            return null;
+        }
     	TrelloBoard existingBoard = getBoardById(boardId);
         if (existingBoard == null) {
             return null;

@@ -1,5 +1,6 @@
 package com.Trello.Server_side.services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class TrelloCardService {
         return trelloCardRepository.save(card);
     }
 
+    // update one card
     public TrelloCard updateCard(int cardId, TrelloCard card) {
     	TrelloCard existingCard = getCardById(cardId);
         if (existingCard == null) {
@@ -47,6 +49,46 @@ public class TrelloCardService {
         existingCard.setUpdatedAt(Calendar.getInstance().getTime());
         return trelloCardRepository.save(existingCard);
     }
+    
+    // update card list
+    public TrelloCard updateCardList(int cardId, int listId, TrelloCard card) {
+    	TrelloList list = trelloListService.getListById(listId);
+    	TrelloCard existingCard = getCardById(cardId);
+        if (existingCard == null) {
+            return null;
+        }
+        existingCard.setName(card.getName());
+        existingCard.setList(list);
+        existingCard.setDescription(card.getDescription());
+        existingCard.setPosition(card.getPosition());
+        existingCard.setDueDate(card.getDueDate());
+        existingCard.setUpdatedAt(Calendar.getInstance().getTime());
+        return trelloCardRepository.save(existingCard);
+    }
+	
+	public List<TrelloCard> updateAllCards(List<TrelloCard> cards) {
+		List<TrelloCard> allUpdatedCards = new ArrayList<TrelloCard>();
+		for (TrelloCard card : cards) {
+	    	TrelloCard existingCard = getCardById(card.getCardId());
+	        if (existingCard == null) {
+	            return null;
+	        }
+	        existingCard.setName(card.getName());
+	        existingCard.setDescription(card.getDescription());
+	        existingCard.setPosition(card.getPosition());
+	        existingCard.setDueDate(card.getDueDate());
+	        existingCard.setUpdatedAt(Calendar.getInstance().getTime());
+			TrelloCard updatedCard = updateCard(card.getCardId(), card);
+	        if (updatedCard == null) {
+	            return null;
+	        }
+	        allUpdatedCards.add(updatedCard);
+		}
+        if (allUpdatedCards.isEmpty()) {
+            return null;
+        }
+		return allUpdatedCards;
+	}
 
     public void deleteCard(int cardId) {
     	TrelloCard card = getCardById(cardId);

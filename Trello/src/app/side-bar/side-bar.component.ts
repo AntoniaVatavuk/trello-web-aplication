@@ -21,7 +21,6 @@ export class SideBarComponent {
     private trelloBoardService: TrelloBoardService
     ) {
       this.loggedUserId = this.appService.getDataToLocalStorage("loggedUserId");
-      console.log(this.loggedUserId);
   }
 
   getAllBoardsFromUser(){

@@ -51,7 +51,7 @@ export class TrelloListService {
   /* POST */
   createList(list: TrelloList): Observable<TrelloList> {
     const url = `${this.listURL}`;
-    return this.http.post<TrelloList>(url, list, this.httpOptions)
+    return this.http.post<TrelloList>(url, JSON.stringify(list, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     );
@@ -59,13 +59,17 @@ export class TrelloListService {
 
   /* PUT */
   updateList(listId: number, list: TrelloList): Observable<any> {
-    console.log("inside service ");
-    console.log("listId: ", listId);
-    console.log("list: ", list);
-    console.log("list as json: ", JSON.stringify(list, null, 4));
     const url = `${this.listURL}/${listId}`;
-    console.log("URL: ", url);
     return this.http.put<TrelloList>(url, JSON.stringify(list, null, 4), this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  // update more than one list
+  updateAllLists(lists: TrelloList[]): Observable<any> {
+    const url = `${this.listURL}/lists`;
+    return this.http.put<TrelloList>(url, JSON.stringify(lists, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     );

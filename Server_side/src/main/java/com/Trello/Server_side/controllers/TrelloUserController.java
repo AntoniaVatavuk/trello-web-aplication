@@ -61,13 +61,4 @@ public class TrelloUserController {
 	  	trelloUserService.deleteUser(userId);
 	    return ResponseEntity.noContent().build();
 	}
- 
-//    @GetMapping("/email/{email}")
-//    public ResponseEntity<TrelloUser> getUserByEmail(@PathVariable String email) {
-//    	TrelloUser user = trelloUserService.getUserByEmail(email);
-//        if (user == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(user);
-//    }
 }

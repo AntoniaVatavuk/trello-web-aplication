@@ -1,11 +1,22 @@
-<mat-card *ngIf="(cards$ | async) as cards" class="cards-card">
+<mat-card *ngIf="(cards$ | async) as cards" class="cards-card" cdkDrag>
+	<div class="drag-handle" cdkDragHandle>
+        <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+        </svg>
+    </div>
 	<mat-card-header>
 		<mat-card-title class="list-title">
-			{{list?.listName}}
+			<input [(ngModel)]="listNameInput" (blur)="onInputBlur()" class="bg-transparent shadow-none pt-2 rename-list-input" type="text" placeholder="List Name">
 		</mat-card-title>
 	</mat-card-header>
 	<mat-card-content cdkDropList [cdkDropListData]="cards" (cdkDropListDropped)="onDrop($event)">
-		<app-card *ngFor="let card of cards" [card]="card" cdkDrag></app-card>
+		<app-card *ngFor="let card of cards" [card]="card"></app-card>
+	</mat-card-content>
+	<mat-card-content>
+		<mat-card>
+			<button mat-flat-button>Add new card</button>
+		</mat-card>
 	</mat-card-content>
 	<!-- <mat-card-footer></mat-card-footer> -->
 </mat-card>

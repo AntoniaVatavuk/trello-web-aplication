@@ -29,19 +29,8 @@ export class AppService {
     localStorage.clear();
   }
 
-  updateCardPosition(cardId: number, card: TrelloCard, newPosition: number){
-    card.position = newPosition;
-    this.trelloCardService.updateCard(cardId, card);
-  }
-
-  updateCardList(cardId: number, card: TrelloCard, newList: number){
-
-    // card.list = newList;
-    this.trelloCardService.updateCard(cardId, card);
-  }
-
   // after drop event, more than one card changes their position, also update list if list is changed
-  updateAllCards(cards: TrelloCard[], list: TrelloList | null){
+  updateAllCardsPosition(cards: TrelloCard[], list: TrelloList | null){
     if (cards.length !== 0) { 
       for (let i = 0; i < cards.length; i++) {
         cards[i].position = i;
@@ -58,14 +47,14 @@ export class AppService {
     // currentList is value of the list where the card was dropped
     if (event.previousContainer === event.container && event.previousIndex !== event.currentIndex) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      this.updateAllCards(event.container.data, null);
+      this.updateAllCardsPosition(event.container.data, null);
     } else {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      this.updateAllCards(event.previousContainer.data, null);
-      this.updateAllCards(event.container.data, currentList);
+      this.updateAllCardsPosition(event.previousContainer.data, null);
+      this.updateAllCardsPosition(event.container.data, currentList);
     }
   }
 

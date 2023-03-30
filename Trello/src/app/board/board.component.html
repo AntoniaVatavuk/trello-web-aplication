@@ -1,7 +1,10 @@
 <div *ngIf="(lists$ | async) as lists">
-	<h1 class="pt-2">{{board?.boardName}}</h1>
+	<h1>
+		<input [(ngModel)]="boardNameInput" (blur)="onInputBlur()" id="renameBoardInput" class="text-white bg-transparent shadow-none pt-2" type="text" placeholder="Board Name">
+	</h1>
 
 	<div class="lists-container" cdkDropList cdkDropListGroup [cdkDropListData]="lists" (cdkDropListDropped)="drop($event, lists)" cdkDropListOrientation="horizontal">
-		<app-list class="list-container" *ngFor="let list of lists" [list]="list" cdkDrag></app-list>
+		<app-list class="list-container" *ngFor="let list of lists" [list]="list"></app-list>
+		<button mat-flat-button>Add new list</button>
 	</div>
 </div>

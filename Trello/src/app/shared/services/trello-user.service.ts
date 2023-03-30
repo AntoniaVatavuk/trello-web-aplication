@@ -37,7 +37,7 @@ export class TrelloUserService {
     );
   }
 
-  getUserByUsername(username: String): Observable<TrelloUser> {
+  getUserByUsername(username: string): Observable<TrelloUser> {
     const url = `${this.userURL}/${username}`;
     return this.http.get<TrelloUser>(url)
     .pipe(
@@ -56,7 +56,7 @@ export class TrelloUserService {
   /* POST */
   createUser(user: TrelloUser): Observable<TrelloUser> {
     const url = `${this.userURL}`;
-    return this.http.post<TrelloUser>(url, user, this.httpOptions)
+    return this.http.post<TrelloUser>(url, JSON.stringify(user, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     );
@@ -65,7 +65,7 @@ export class TrelloUserService {
   /* PUT */
   updateUser(id: number, user: TrelloUser): Observable<any> {
     const url = `${this.userURL}/${id}`;
-    return this.http.put(url, user, this.httpOptions)
+    return this.http.put(url, JSON.stringify(user, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     );

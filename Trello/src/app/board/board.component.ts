@@ -15,7 +15,8 @@ import { AppService } from '../app.service';
 export class BoardComponent {
   @Input() currentBoardId?: number | null = null;
   lists$!: Observable<TrelloList[]>;
-  board: TrelloBoard | null = null;
+  board?: TrelloBoard;
+  boardNameInput: string = "";
 
   constructor(
     private trelloListService: TrelloListService,
@@ -26,13 +27,16 @@ export class BoardComponent {
   getAllListsOnBoard(){
     if(this.currentBoardId != null){
       this.lists$ = this.trelloListService.getListsByBoardId(this.currentBoardId);
-      // this.lists$.subscribe(lists => this.lists);
+
     }
   }
 
   updateSelectedBoard(){
     if (this.currentBoardId != null) {
-      this.trelloBoardService.getBoard(this.currentBoardId).subscribe(board => this.board = board);
+      this.trelloBoardService.getBoard(this.currentBoardId).subscribe(board => {
+        this.boardNameInput = board.boardName
+        this.board = board;
+      });
     }
   }  
 
@@ -49,8 +53,11 @@ export class BoardComponent {
     }
   }
 
-  ngOnDestroy(){
-    // save all positions to db
+  onInputBlur(){
+    if (this.board != null && this.boardNameInput !== this.board.boardName) {
+      this.board.boardName = this.boardNameInput;
+      this.trelloBoardService.updateBoard(this.board.boardId, this.board).subscribe();
+    }
   }
 
   // after drop event, more than one list changes their position so we send a list of lists to update positions all in one go
@@ -68,7 +75,6 @@ export class BoardComponent {
       moveItemInArray(lists, event.previousIndex, event.currentIndex);
       this.updateAllListsPosition(lists);
     }
-
   }
 
 }

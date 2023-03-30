@@ -47,7 +47,7 @@ export class TrelloBoardService {
   /* POST */
   createBoard(board: TrelloBoard): Observable<TrelloBoard> {
     const url = `${this.boardURL}`;
-    return this.http.post<TrelloBoard>(url, board, this.httpOptions)
+    return this.http.post<TrelloBoard>(url, JSON.stringify(board, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     );
@@ -56,7 +56,7 @@ export class TrelloBoardService {
   /* PUT */
   updateBoard(boardId: number, board: TrelloBoard): Observable<any> {
     const url = `${this.boardURL}/${boardId}`;
-    return this.http.put(url, board, this.httpOptions)
+    return this.http.put(url, JSON.stringify(board, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     );

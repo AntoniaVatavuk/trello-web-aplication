@@ -56,7 +56,7 @@ public class TrelloCardController {
         return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
     }    
     
-    // update existing board
+    // update existing card
 	@PutMapping("/{cardId}")
 	public ResponseEntity<TrelloCard> updateCard(@PathVariable int cardId, @Valid @RequestBody TrelloCard card) {
 	  	TrelloCard updatedCard = trelloCardService.updateCard(cardId, card);

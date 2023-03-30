@@ -42,7 +42,7 @@ public class TrelloCardService {
         if (existingCard == null) {
             return null;
         }
-        existingCard.setName(card.getName());
+        existingCard.setCardName(card.getCardName());
         existingCard.setDescription(card.getDescription());
         existingCard.setPosition(card.getPosition());
         existingCard.setDueDate(card.getDueDate());
@@ -57,7 +57,7 @@ public class TrelloCardService {
         if (existingCard == null) {
             return null;
         }
-        existingCard.setName(card.getName());
+        existingCard.setCardName(card.getCardName());
         existingCard.setList(list);
         existingCard.setDescription(card.getDescription());
         existingCard.setPosition(card.getPosition());
@@ -73,7 +73,7 @@ public class TrelloCardService {
 	        if (existingCard == null) {
 	            return null;
 	        }
-	        existingCard.setName(card.getName());
+	        existingCard.setCardName(card.getCardName());
 	        existingCard.setDescription(card.getDescription());
 	        existingCard.setPosition(card.getPosition());
 	        existingCard.setDueDate(card.getDueDate());

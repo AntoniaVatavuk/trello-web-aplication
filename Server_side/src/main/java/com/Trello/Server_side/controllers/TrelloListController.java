@@ -57,7 +57,6 @@ public class TrelloListController {
 	//update existing list
 	@PutMapping("/{listId}")
 	public ResponseEntity<TrelloList> updateList(@RequestBody TrelloList list, @PathVariable int listId) {
-		System.out.println(list);
 	    TrelloList updatedList = trelloListService.updateList(listId, list);
 	    if (updatedList == null) {
 	    	return ResponseEntity.notFound().build();

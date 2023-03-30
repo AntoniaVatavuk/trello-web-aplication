@@ -24,8 +24,8 @@ public class TrelloCard {
     @JoinColumn(name = "list_id", nullable = false)
     private TrelloList list;
     
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "card_name", nullable = false)
+    private String cardName;
 
     @Column(name = "description")
     private String description;
@@ -46,9 +46,9 @@ public class TrelloCard {
     
     public TrelloCard() {}
 
-    public TrelloCard(TrelloList list, String name, String description, Integer position, Date dueDate) {
+    public TrelloCard(TrelloList list, String cardName, String description, Integer position, Date dueDate) {
         this.list = list;
-        this.name = name;
+        this.cardName = cardName;
         this.description = description;
         this.position = position;
         this.dueDate = dueDate;
@@ -72,12 +72,12 @@ public class TrelloCard {
         this.list = list;
     }
 
-    public String getName() {
-        return name;
+    public String getCardName() {
+        return cardName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCardName(String name) {
+        this.cardName = name;
     }
 
     public String getDescription() {

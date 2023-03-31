@@ -26,17 +26,17 @@ public class TrelloUserController {
     }
     
     // check user with this email exists and that the password is correct
-    @GetMapping("/login/{email}/{password}")
-    public ResponseEntity<TrelloUser> checkUser(@PathVariable String email, @PathVariable String password) {
-    	TrelloUser user = trelloUserService.getUserByEmail(email);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-        if (user.getPassword().equals(password)) {
-            return ResponseEntity.ok(user);
+   @GetMapping("/login/{email}/{password}")
+   public ResponseEntity<TrelloUser> checkUser(@PathVariable String email, @PathVariable String password) {
+   	TrelloUser user = trelloUserService.getUserByEmail(email);
+       if (user == null) {
+           return ResponseEntity.notFound().build();
+       }
+       if (user.getPassword().equals(password)) {
+           return ResponseEntity.ok(user);
 		}
-        return null;
-    }
+       return null;
+   }
     
     // create new user
     @PostMapping

@@ -45,8 +45,8 @@ export class TrelloBoardService {
   }
 
   /* POST */
-  createBoard(board: TrelloBoard): Observable<TrelloBoard> {
-    const url = `${this.boardURL}`;
+  createBoard(board: TrelloBoard, userId: number): Observable<TrelloBoard> {
+    const url = `${this.boardURL}/user/${userId}`;
     return this.http.post<TrelloBoard>(url, JSON.stringify(board, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)

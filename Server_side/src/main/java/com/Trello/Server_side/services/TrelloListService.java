@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Trello.Server_side.models.TrelloBoard;
+import com.Trello.Server_side.models.TrelloCard;
 import com.Trello.Server_side.models.TrelloList;
 import com.Trello.Server_side.repositories.TrelloListRepository;
 
@@ -18,6 +19,8 @@ public class TrelloListService {
 	private TrelloListRepository trelloListRepository;
     @Autowired
 	private TrelloBoardService trelloBoardService;
+    @Autowired
+	private TrelloCardService trelloCardService;
 	
     // Get list by list ID
 	public TrelloList getListById(int listId) {
@@ -66,8 +69,11 @@ public class TrelloListService {
 	}
 	
     public void deleteListById(int listId) {
-    	TrelloList existingList = getListById(listId);
-		trelloListRepository.delete(existingList);
+    	List<TrelloCard> listCards = trelloCardService.getAllCardsByListId(listId);
+    	for (TrelloCard card : listCards) {
+    		trelloCardService.deleteCard(card.getCardId());
+		}
+		trelloListRepository.deleteById(listId);
 	}
 }
 

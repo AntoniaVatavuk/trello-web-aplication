@@ -42,7 +42,7 @@ public class TrelloListController {
 	}
 
 	// create new list
-	@PostMapping
+	@PostMapping("/board/{boardId}")
 	public ResponseEntity<TrelloList> createList(@RequestBody TrelloList list, @PathVariable int boardId) {
 	    // Get the board associated with this list
 	    TrelloBoard board = trelloBoardService.getBoardById(boardId);

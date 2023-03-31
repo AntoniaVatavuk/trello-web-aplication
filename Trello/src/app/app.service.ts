@@ -9,8 +9,6 @@ import { TrelloList } from './shared/interfaces/trello-list';
 @Injectable()
 export class AppService {
 
-  // authenticated = false;
-
   constructor(private http: HttpClient, private trelloCardService: TrelloCardService, private trelloListService: TrelloListService) {
   }
 
@@ -43,7 +41,7 @@ export class AppService {
     }
   }
 
-  public drop(event: CdkDragDrop<TrelloCard[]>, currentList: TrelloList | null) {
+  public drop(event: CdkDragDrop<TrelloCard[]>, currentList: TrelloList | null, ) {
     // currentList is value of the list where the card was dropped
     if (event.previousContainer === event.container && event.previousIndex !== event.currentIndex) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -57,22 +55,5 @@ export class AppService {
       this.updateAllCardsPosition(event.container.data, currentList);
     }
   }
-
-  // authenticate(credentials, callback) {
-
-  //       const headers = new HttpHeaders(credentials ? {
-  //           authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-  //       } : {});
-
-  //       this.http.get('user', {headers: headers}).subscribe(response => {
-  //           if (response['name']) {
-  //               this.authenticated = true;
-  //           } else {
-  //               this.authenticated = false;
-  //           }
-  //           return callback && callback();
-  //       });
-
-  //   }
 
 }

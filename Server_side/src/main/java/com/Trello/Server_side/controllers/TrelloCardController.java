@@ -44,7 +44,7 @@ public class TrelloCardController {
 	}
     
     // create new card
-    @PostMapping
+    @PostMapping("/list/{listId}")
     public ResponseEntity<TrelloCard> createCard(@Valid @RequestBody TrelloCard card, @PathVariable int listId) {
 	    // Get the list associated with this card
 	    TrelloList list = trelloListService.getListById(listId);

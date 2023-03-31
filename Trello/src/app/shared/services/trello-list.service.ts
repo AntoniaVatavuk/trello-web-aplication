@@ -49,8 +49,8 @@ export class TrelloListService {
   }
 
   /* POST */
-  createList(list: TrelloList): Observable<TrelloList> {
-    const url = `${this.listURL}`;
+  createList(list: TrelloList, boardId: number): Observable<TrelloList> {
+    const url = `${this.listURL}/board/${boardId}`;
     return this.http.post<TrelloList>(url, JSON.stringify(list, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)

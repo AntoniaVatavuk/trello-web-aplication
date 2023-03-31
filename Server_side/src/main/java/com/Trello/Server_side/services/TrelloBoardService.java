@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Trello.Server_side.models.TrelloBoard;
+import com.Trello.Server_side.models.TrelloList;
 import com.Trello.Server_side.models.TrelloUser;
 import com.Trello.Server_side.repositories.TrelloBoardRepository;
 
@@ -17,6 +18,8 @@ public class TrelloBoardService {
     private TrelloBoardRepository trelloBoardRepository;
     @Autowired
     private TrelloUserService trelloUserService;
+    @Autowired
+    private TrelloListService trelloListService;
     
     public TrelloBoard getBoardById(int boardId) {
         return trelloBoardRepository.findById(boardId).orElse(null);
@@ -54,7 +57,10 @@ public class TrelloBoardService {
     }
 
     public void deleteBoard(int boardId) {
-    	TrelloBoard existingBoard = getBoardById(boardId);
-    	trelloBoardRepository.delete(existingBoard);
+    	List<TrelloList> boardLists = trelloListService.getAllListsByBoardId(boardId);
+    	for (TrelloList list : boardLists) {
+			trelloListService.deleteListById(list.getListId());
+		}
+    	trelloBoardRepository.deleteById(boardId);
     }
 }

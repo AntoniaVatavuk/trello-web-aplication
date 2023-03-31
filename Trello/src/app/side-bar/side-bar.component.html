@@ -7,7 +7,7 @@
                 <mat-icon class="mat-icon-button-icon">more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu" style="outline-style: none;">
-                <button mat-menu-item (click)="addNewBoard()">
+                <button mat-menu-item (click)="openAddNewBoardDialog()">
                     <mat-icon>add</mat-icon>
                     <span>Add new board</span>
                 </button>
@@ -18,7 +18,7 @@
                 </button>
             </mat-menu>
     
-            <button mat-icon-button (click)="addNewBoard()">
+            <button mat-icon-button (click)="openAddNewBoardDialog()">
                 <mat-icon class="mat-icon-button-icon">add</mat-icon>
             </button>
         </div>

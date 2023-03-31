@@ -46,8 +46,8 @@ export class TrelloCardService {
   }
 
   /* POST */
-  createCard(card: TrelloCard): Observable<TrelloCard> {
-    const url = `${this.cardURL}`;
+  createCard(card: TrelloCard, listId: number): Observable<TrelloCard> {
+    const url = `${this.cardURL}/list/${listId}`;
     return this.http.post<TrelloCard>(url, JSON.stringify(card, null, 4), this.httpOptions)
     .pipe(
       catchError(this.handleError)

@@ -91,7 +91,6 @@ public class TrelloCardService {
 	}
 
     public void deleteCard(int cardId) {
-    	TrelloCard card = getCardById(cardId);
-        trelloCardRepository.delete(card);
+        trelloCardRepository.deleteById(cardId);
     }
 }

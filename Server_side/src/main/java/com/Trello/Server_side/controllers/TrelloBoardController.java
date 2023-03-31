@@ -42,8 +42,8 @@ public class TrelloBoardController {
     }
 
     // create new board
-    @PostMapping
-    public ResponseEntity<TrelloBoard> createBoard(@RequestBody TrelloBoard board, int userId) {
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<TrelloBoard> createBoard(@RequestBody TrelloBoard board, @PathVariable int userId) {
 	    // Get the user associated with this board
     	TrelloUser user = trelloUserService.getUserById(userId);
         if (user == null) {

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>New list for board: {{data.boardName}}</h1>
+<div mat-dialog-content class="d-flex flex-column">
+    <mat-form-field appearance="fill">
+        <mat-label>List name</mat-label>
+        <input matInput [(ngModel)]="newList.listName">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="newList" cdkFocusInitial>Ok</button>
+</div>

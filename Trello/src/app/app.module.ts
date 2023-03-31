@@ -13,6 +13,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { RouterModule, Routes } from '@angular/router';
 import { AppService } from './app.service';
@@ -28,9 +32,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { DatePipe } from '@angular/common';
+import { AddNewCardComponent } from './add-new-card/add-new-card.component';
+import { AddNewListComponent } from './add-new-list/add-new-list.component';
+import { AddNewBoardComponent } from './add-new-board/add-new-board.component';
 
 const routes: Routes = [
-  // { path: '', pathMatch: 'full', redirectTo: 'login'},
   { path: '', pathMatch: 'full', redirectTo: 'home'},
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent}
@@ -44,7 +50,10 @@ const routes: Routes = [
     ListComponent,
     BoardComponent,
     HomeComponent,
-    SideBarComponent
+    SideBarComponent,
+    AddNewCardComponent,
+    AddNewListComponent,
+    AddNewBoardComponent
   ],
   imports: [
     
@@ -63,9 +72,12 @@ const routes: Routes = [
     MatMenuModule,
     MatIconModule,
     DragDropModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [AppService, DatePipe],
+  providers: [AppService, DatePipe, MatDialog],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
